@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue Pets App</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+	<style type="text/css">
+		a:hover {
+		cursor:pointer;
+	}
+</style>
+</head>
+<body>
+	<div id="app">
+		<!-- Navbar -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a class="nav-item nav-link" v-on:click="imgNumber = 0">Dog</a>
+					<a class="nav-item nav-link" v-on:click="imgNumber = 1">Cat</a>
+					<a class="nav-item nav-link" v-on:click="imgNumber = 2">Turtle</a>
+					<a class="nav-item nav-link" v-on:click="imgNumber = 3">Fish</a>
+				</div>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<!-- Title -->
+			<div class="row">
+				<div class="col text-center">
+					<div>
+						<h1> Pictures of Pets </h1>
+					</div>
+				</div>
+			</div>
+			<!-- Checkbox -->
+			<div class="row">
+				<div class="col">
+					<label class="btn btn-secondary active">
+						<input v-model="hideCard" type="checkbox" checked>Show Pets
+					</label>
+				</div>
+			</div>
+			<!-- Card -->
+			<div class="row">
+				<div class="col text-center">
+					<div v-if="hideCard" class="card">
+						<!-- Image -->
+						<img class="card-img-top" :src="images[imgNumber].url" height="600px">
+						<div class="card-body">
+							<!-- Title -->
+							<h5 class="card-title">{{ images[imgNumber].name }}</h5>
+							<!-- Slider -->
+							<div class="slidecontainer">
+								<input v-model="imgNumber" type="range" min="0" :max="3" value="0" class="slider" id="myRange">
+							</div>
+							<!-- Next img button -->
+							<a class="btn btn-primary" v-on:click="changePicture()"> Next Image </a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+var app = new Vue({
+	el: '#app',
+	data: {
+		title: 'Hola',
+		imgNumber: 0,
+		hideCard: true,
+		images: [
+			{
+				url: 'https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=1600&h=900',
+				name: 'Dog'
+			},	
+			{
+				url: 'https://images.theconversation.com/files/336248/original/file-20200520-152302-97x8pw.jpg?ixlib=rb-1.1.0&rect=0%2C1248%2C6837%2C3418&q=45&auto=format&w=1356&h=668&fit=crop',
+				name: 'Cat'
+			},
+			{
+				url: 'https://i.pinimg.com/originals/89/1e/93/891e9353faa6691f82be55ecae6499ba.jpg',
+				name: 'Turtle'
+			},
+			{
+				url: 'https://p0.pikist.com/photos/959/709/goldfish-lion-head-aquarium-freshwater-domestic-cute-fish-pet.jpg',
+				name: 'Fish'
+			}
+		]
+	},
+	methods: {
+		changePicture () {
+			if (Number(this.imgNumber) < this.images.length - 1) {
+				let newNum = Number(this.imgNumber)
+				this.imgNumber = newNum + 1
+			} else {
+				this.imgNumber = 0
+			}
+		}
+	}
+})
+</script>
